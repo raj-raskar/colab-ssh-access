@@ -1,3 +1,4 @@
 #!/bin/bash
+apt install openssh-server pwgen curl -y
 mkdir -p /var/run/sshd
-echo -e "PermitRootLogin yes\nPasswordAuthentication yes" > /etc/ssh/sshd_config.d/00-rajvaibhav.conf
+echo -ne "PermitRootLogin yes\nPasswordAuthentication yes" > /etc/ssh/sshd_config.d/00-rajvaibhav.conf
