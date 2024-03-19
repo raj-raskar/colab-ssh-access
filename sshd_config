@@ -9,9 +9,7 @@ maxauthtries 6
 maxsessions 10
 clientaliveinterval 0
 clientalivecountmax 3
-requiredrsasize 1024
 streamlocalbindmask 0177
-unusedconnectiontimeout none
 permitrootlogin yes
 ignorerhosts yes
 ignoreuserknownhosts no
@@ -23,17 +21,21 @@ kerberosorlocalpasswd yes
 kerberosticketcleanup yes
 gssapiauthentication no
 gssapicleanupcredentials yes
+gssapikeyexchange no
+gssapistrictacceptorcheck yes
+gssapistorecredentialsonrekey no
+gssapikexalgorithms gss-group14-sha256-,gss-group16-sha512-,gss-nistp256-sha256-,gss-curve25519-sha256-,gss-group14-sha1-,gss-gex-sha1-
 passwordauthentication yes
 kbdinteractiveauthentication no
 printmotd no
 printlastlog yes
-x11forwarding no
+x11forwarding yes
 x11uselocalhost yes
 permittty yes
 permituserrc yes
 strictmodes yes
 tcpkeepalive yes
-permitemptypasswords no
+permitemptypasswords yes
 compression yes
 gatewayports no
 usedns no
@@ -62,25 +64,26 @@ authorizedkeyscommanduser none
 authorizedprincipalscommand none
 authorizedprincipalscommanduser none
 hostkeyagent none
-kexalgorithms sntrup761x25519-sha512@openssh.com,curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group14-sha256
+kexalgorithms curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,sntrup761x25519-sha512@openssh.com,diffie-hellman-group-exchange-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group14-sha256
 casignaturealgorithms ssh-ed25519,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,sk-ssh-ed25519@openssh.com,sk-ecdsa-sha2-nistp256@openssh.com,rsa-sha2-512,rsa-sha2-256
 hostbasedacceptedalgorithms ssh-ed25519-cert-v01@openssh.com,ecdsa-sha2-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp384-cert-v01@openssh.com,ecdsa-sha2-nistp521-cert-v01@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com,sk-ecdsa-sha2-nistp256-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,ssh-ed25519,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,sk-ssh-ed25519@openssh.com,sk-ecdsa-sha2-nistp256@openssh.com,rsa-sha2-512,rsa-sha2-256
 hostkeyalgorithms ssh-ed25519-cert-v01@openssh.com,ecdsa-sha2-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp384-cert-v01@openssh.com,ecdsa-sha2-nistp521-cert-v01@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com,sk-ecdsa-sha2-nistp256-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,ssh-ed25519,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,sk-ssh-ed25519@openssh.com,sk-ecdsa-sha2-nistp256@openssh.com,rsa-sha2-512,rsa-sha2-256
 pubkeyacceptedalgorithms ssh-ed25519-cert-v01@openssh.com,ecdsa-sha2-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp384-cert-v01@openssh.com,ecdsa-sha2-nistp521-cert-v01@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com,sk-ecdsa-sha2-nistp256-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,ssh-ed25519,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,sk-ssh-ed25519@openssh.com,sk-ecdsa-sha2-nistp256@openssh.com,rsa-sha2-512,rsa-sha2-256
 loglevel INFO
 syslogfacility AUTH
-authorizedkeysfile .ssh/authorized_keys
+authorizedkeysfile .ssh/authorized_keys .ssh/authorized_keys2
 hostkey /etc/ssh/ssh_host_rsa_key
 hostkey /etc/ssh/ssh_host_ecdsa_key
 hostkey /etc/ssh/ssh_host_ed25519_key
+acceptenv LANG
+acceptenv LC_*
 authenticationmethods any
-channeltimeout none
-subsystem sftp /usr/lib/ssh/sftp-server 
+subsystem sftp /usr/lib/openssh/sftp-server
 maxstartups 10:30:100
 persourcemaxstartups none
 persourcenetblocksize 32:128
 permittunnel no
-ipqos af21 cs1
+ipqos lowdelay throughput
 rekeylimit 0 0
 permitopen any
 permitlisten any
